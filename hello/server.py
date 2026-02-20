@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/ola/{nome}") #parâmetro de rota
+@app.get("/ola/{nome}") #parâmetro path
 async def home(nome:str): #bom cololcar essa tipagem, para facilitar o debbug e na inserção de dados
     texto = f"olá {nome}"
     return {"mensage": texto}
@@ -13,7 +13,10 @@ def quadrado(num:int):
     texto = f"o quadrado de {num} é {ress}"
     return texto
     
-
+@app.get("/dobro") #parametro query
+def dobro(num:int):
+    ress = num *2
+    return {"resultado": f"O dobro de {num} é {ress}"}
 
 # criando uma função para cada verbo http na mesma rota (profile)
 '''
