@@ -12,20 +12,21 @@ def quadrado(num:int):
     ress = num*num
     texto = f"o quadrado de {num} é {ress}"
     return texto
-    
+
 @app.get("/dobro") #parametro query
 def dobro(num:int):
     ress = num *2
     return {"resultado": f"O dobro de {num} é {ress}"}
 # http://127.0.0.1:8000/dobro?num=4 -> colocar ?, o nome do parâmetro e = o valor
 
-@app.get("/area")
-def area(largura:int, altura:int):
+@app.get("/area-retangulo") 
+def area_retangulo(largura:int = 1, altura:int = 1): # colocando um valor padrão, caso o usuário não informe o valor, ele vai usar o valor padrão
     ress = largura * altura
     if largura != altura:
         return {"area": f"A área do retângulo é de {ress}"}
     else:
         return {"area": f"A área do quadrado é de {ress}"}
+# http://localhost:8000/area?largura=10&altura=4 <- usar & para separar os parâmetros
 
 
 # criando uma função para cada verbo http na mesma rota (profile)
