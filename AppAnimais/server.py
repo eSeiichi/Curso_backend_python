@@ -1,25 +1,33 @@
 from fastapi import FastAPI
+from typing import List, Optional
 from pydantic import BaseModel
-import random
+from uuid import uuid4, UUID
 
 app = FastAPI()
 
 class Animal(BaseModel):
-    id: int = random.randint()
+    id: Optional[UUID] = None
     nome: str
     idade: int
-    sexo: bool
+    sexo: str
     cor: str
 
-@app.post("/animais")
-def cadastrar_animais(animal: Animal):
-    return {
-        "nome": animal.nome,
-        "idade": animal.idade,
-        "sexo": animal.sexo,
-        "cor": animal.cor
-    }
+banco: List[Animal] = []
+
 
 @app.get("/animais")
-def retornar_todos_animais():
-    return 
+def listar_animais():
+    return banco
+
+
+@app.post("/animais")
+def criar_animal(animal: Animal):
+    animal.id = uuid4()
+    banco.append(animal)
+    return None
+
+@app.get("/animais/{id}")
+def achar_animal(id):
+    for char in banco:
+        if banco[char][0] == id:
+            return banco[char]
