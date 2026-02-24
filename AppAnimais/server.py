@@ -14,6 +14,9 @@ class Animal(BaseModel):
 
 banco: List[Animal] = []
 
+@app.get("/")
+def hello():
+    return {"mesage": "acesse o path /animais"}
 
 @app.get("/animais")
 def listar_animais():
