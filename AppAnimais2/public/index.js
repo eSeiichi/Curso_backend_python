@@ -43,10 +43,41 @@ function manipularFormulario(){
     }
 }
 
+async function obterAnimal() {
+    const form = document.getElementById('obter_animal')
+    const lista_animais = await axios.get("http://localhost:8000/animais")
+    const animais = lista_animais.data
+    
+    form.onsubmit = (event)=>{
+        event.preventDefault()
+
+        const input_id_animal = document.getElementById('id_animal')
+        const id_animal = input_id_animal.value
+        
+        animais.forEach(animal => {
+            if(animal.id == id_animal){
+                
+                const texto = `
+                id: ${animal.id},
+                nome: ${animal.nome},
+                idade: ${animal.idade},
+                sexo: ${animal.sexo},
+                cor: ${animal.cor}`
+                
+                const item = document.createElement('p')
+                item.innerText = texto
+                document.body.appendChild(item)
+            }
+        });
+
+    }
+}
+
 function app(){
     console.log("App iniciada")
     carregarAnimais()
     manipularFormulario()
+    obterAnimal()
 }
 
 app()
