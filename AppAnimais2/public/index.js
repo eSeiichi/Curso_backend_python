@@ -40,18 +40,19 @@ function manipularFormulario(){
         carregarAnimais() //recarregando a lista de animais na ul
 
         alert(`${nome_animal} cadastrado`) //mensagem para o usuário
+        location.reload()
     }
 }
 
 async function obterAnimal() {
-    const form = document.getElementById('obter_animal_get')
+    const form = document.getElementById('obter_animal')
     const lista_animais = await axios.get("http://localhost:8000/animais")
     const animais = lista_animais.data
     
     form.onsubmit = (event)=>{
         event.preventDefault()
 
-        const input_id_animal = document.getElementById('id_animal')
+        const input_id_animal = document.getElementById('id_animal_get')
         const id_animal = input_id_animal.value
         
         animais.forEach(animal => {
@@ -64,9 +65,9 @@ async function obterAnimal() {
                 sexo: ${animal.sexo},
                 cor: ${animal.cor}`
                 
-                const item = document.createElement('p')
+                const item = document.getElementById("return_obter_animal")
                 item.innerText = texto
-                document.body.appendChild(item)
+                
             }
         });
 
@@ -84,6 +85,7 @@ async function deletarAnimal() {
         try{
             await axios.delete(`http://localhost:8000/animais/${id_animal}`)
             alert("animal deletado com sucesso")
+            location.reload()
         }
         catch{
             console.log("Não foi possível deletar o animal")
